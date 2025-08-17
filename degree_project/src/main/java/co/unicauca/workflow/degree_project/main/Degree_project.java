@@ -1,13 +1,12 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package co.unicauca.workflow.degree_project.main;
 import co.unicauca.workflow.degree_project.presentation.GUISignIn;
 import javax.swing.JFrame;
 
 
-public class Degree_proyect {
+public class Degree_project {
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
