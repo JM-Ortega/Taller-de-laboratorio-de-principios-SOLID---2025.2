@@ -234,7 +234,7 @@ public class GUISignIn extends javax.swing.JFrame {
                 JOptionPane.WARNING_MESSAGE
             );
         }
-        
+      
         IUserRepository repository = Factory.getInstance().getRepository("default");
         UserService service = new UserService(repository);
         boolean flag = service.validarSesion(usuario, contraseña);
