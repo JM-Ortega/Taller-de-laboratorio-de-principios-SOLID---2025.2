@@ -8,7 +8,7 @@ package co.unicauca.workflow.degree_proyect.domain.entities;
  *
  * @author Ortega
  */
-public enum Roles {
+public enum Rol {
     Estudiante,
     Docente
 }

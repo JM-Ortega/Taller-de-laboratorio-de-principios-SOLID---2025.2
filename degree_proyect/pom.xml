@@ -8,7 +8,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
-        <exec.mainClass>co.unicauca.workflow.degree_proyect.Degree_proyect</exec.mainClass>
+        <exec.mainClass>co.unicauca.workflow.degree_proyect.main.Degree_proyect</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
