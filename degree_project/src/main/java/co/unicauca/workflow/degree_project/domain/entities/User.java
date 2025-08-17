@@ -1,16 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.unicauca.workflow.degree_project.domain.entities;
+
 
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- *
- * @author Ortega
- */
 public class User {
 
     private final String id;
@@ -21,6 +14,7 @@ public class User {
     private Rol rol;
     private String email;
     private String passwordHash;
+
 
     public User() {
         this.id = UUID.randomUUID().toString();
@@ -131,5 +125,4 @@ public class User {
                 ", email=" + email +
                 '}';
     }
-
 }
