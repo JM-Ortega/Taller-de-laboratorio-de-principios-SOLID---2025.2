@@ -1,8 +1,12 @@
 package co.unicauca.workflow.degree_project.domain.entities;
 
+
+import java.util.Objects;
+import java.util.UUID;
+
 public class User {
-    
-    private String id;
+
+    private final String id;
     private String nombres;
     private String apellidos;
     private String celular;
@@ -11,8 +15,13 @@ public class User {
     private String email;
     private String passwordHash;
 
-    public User(String id, String nombres, String apellidos, String celular, Programa programa, Rol rol, String email, String passwordHash) {
-        this.id = id;
+
+    public User() {
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public User(String nombres, String apellidos, String celular, Programa programa, Rol rol, String email, String passwordHash) {
+        this.id = UUID.randomUUID().toString();
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.celular = celular;
@@ -24,10 +33,6 @@ public class User {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNombres() {
@@ -85,9 +90,39 @@ public class User {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        return Objects.equals(this.id, other.id);
+    }
+
     @Override
     public String toString() {
-        return "Nombre: " +nombres+ "\nApellido: " +apellidos+ "\nPrograma: " +programa+ "\nEmail: " +email+ "\nCelular: " +celular+ "\nRol: " +rol+ "\nContrasena: " +passwordHash +"\n\n";
+        return "User{" +
+                "id=" + id +
+                ", nombres=" + nombres +
+                ", apellidos=" + apellidos +
+                ", celular=" + celular +
+                ", programa=" + programa +
+                ", rol=" + rol +
+                ", email=" + email +
+                '}';
     }
 }
