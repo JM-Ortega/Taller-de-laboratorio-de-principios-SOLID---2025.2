@@ -65,3 +65,4 @@ out/
 Thumbs.db
 .Trash-*
 .nfs*
+/degree_project/target/

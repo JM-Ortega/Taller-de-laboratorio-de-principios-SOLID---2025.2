@@ -3,14 +3,21 @@
  */
 
 package co.unicauca.workflow.degree_project.main;
+import co.unicauca.workflow.degree_project.presentation.GUISignIn;
+import javax.swing.JFrame;
 
-/**
- *
- * @author Ortega
- */
+
 public class Degree_proyect {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                GUISignIn ventana = new GUISignIn();
+                ventana.setVisible(true);
+                ventana.setLocationRelativeTo(null); // Centra la ventana
+                ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la app al cerrar la ventana
+            }
+        });
     }
 }
