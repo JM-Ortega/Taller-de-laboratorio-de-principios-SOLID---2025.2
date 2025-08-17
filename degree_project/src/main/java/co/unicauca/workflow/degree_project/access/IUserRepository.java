@@ -1,13 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package co.unicauca.workflow.degree_project.access;
 
-/**
- *
- * @author Ortega
- */
+import co.unicauca.workflow.degree_project.domain.entities.User;
+
 public interface IUserRepository {
+    boolean save(User newUser);
     
+    String getRol(String email, String password);
+    
+    String getPassword(String email);
 }
