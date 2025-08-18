@@ -47,6 +47,7 @@ public class GUIDocente extends javax.swing.JFrame {
         BtnEvaluarAnteproyectos = new javax.swing.JButton();
         BtnEvaluarMonografias = new javax.swing.JButton();
         BtnPrincipal = new javax.swing.JButton();
+        BtnSalir = new javax.swing.JButton();
         content = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         EMensaje = new java.awt.Label();
@@ -128,10 +129,28 @@ public class GUIDocente extends javax.swing.JFrame {
             }
         });
 
+        BtnSalir.setBackground(new java.awt.Color(32, 44, 103));
+        BtnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BtnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        BtnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/salirG.png"))); // NOI18N
+        BtnSalir.setText("  Salir");
+        BtnSalir.setBorder(null);
+        BtnSalir.setBorderPainted(false);
+        BtnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnSalir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        BtnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
         menu.setLayout(menuLayout);
         menuLayout.setHorizontalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(BtnPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BtnEvaluarAnteproyectos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BtnEvaluarMonografias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menuLayout.createSequentialGroup()
                 .addGroup(menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuLayout.createSequentialGroup()
@@ -141,9 +160,7 @@ public class GUIDocente extends javax.swing.JFrame {
                         .addGap(70, 70, 70)
                         .addComponent(TitleMenu)))
                 .addContainerGap(14, Short.MAX_VALUE))
-            .addComponent(BtnPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(BtnEvaluarAnteproyectos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(BtnEvaluarMonografias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BtnSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,12 +169,14 @@ public class GUIDocente extends javax.swing.JFrame {
                 .addComponent(TitleMenu)
                 .addGap(18, 18, 18)
                 .addComponent(linea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(31, 31, 31)
                 .addComponent(BtnPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnEvaluarAnteproyectos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnEvaluarMonografias, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -270,6 +289,12 @@ public class GUIDocente extends javax.swing.JFrame {
         ShowJPanel(new EvaluarMon());
     }//GEN-LAST:event_BtnEvaluarMonografiasActionPerformed
 
+    private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
+        GUISignIn iniciar = new GUISignIn();
+        iniciar.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BtnSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -309,6 +334,7 @@ public class GUIDocente extends javax.swing.JFrame {
     private javax.swing.JButton BtnEvaluarAnteproyectos;
     private javax.swing.JButton BtnEvaluarMonografias;
     private javax.swing.JButton BtnPrincipal;
+    private javax.swing.JButton BtnSalir;
     private java.awt.Label EMensaje;
     private javax.swing.JLabel LogoUnicauca;
     private javax.swing.JLabel TitleMenu;
