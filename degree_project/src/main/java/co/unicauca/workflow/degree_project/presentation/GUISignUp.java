@@ -4,6 +4,9 @@
  */
 package co.unicauca.workflow.degree_project.presentation;
 
+import co.unicauca.workflow.degree_project.domain.entities.Programa;
+import co.unicauca.workflow.degree_project.domain.entities.Rol;
+import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JOptionPane;
@@ -16,13 +19,16 @@ import javax.swing.SwingUtilities;
  * @author Laura
  */
 public class GUISignUp extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUISignUp.class.getName());
+
+    private final IRegistrationService registration;
 
     /**
      * Creates new form GUIPrueba
      */
-    public GUISignUp() {
+    public GUISignUp(IRegistrationService registration) {
+        this.registration = registration;
         initComponents();
         this.setLocationRelativeTo(null);
         SwingUtilities.invokeLater(() -> {
@@ -219,7 +225,8 @@ public class GUISignUp extends javax.swing.JFrame {
         jBackGround.add(lblPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
 
         cbxPrograma.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxPrograma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingeniería de Sistemas", "Ingeniería Electrónica", "Telecomunicaciones", "Automática industrial", "Tecnología en Telemática" }));
+        cbxPrograma.setModel(new javax.swing.DefaultComboBoxModel<>(co.unicauca.workflow.degree_project.domain.entities.Programa.values()));
+        cbxPrograma.setSelectedIndex(0);
         jBackGround.add(cbxPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 270, -1));
 
         lblRol.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
@@ -227,7 +234,8 @@ public class GUISignUp extends javax.swing.JFrame {
         jBackGround.add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
 
         cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estudiante", "Docente" }));
+        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(co.unicauca.workflow.degree_project.domain.entities.Rol.values()));
+        cbxRol.setSelectedIndex(0);
         jBackGround.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 270, -1));
 
         lblCondiciones.setForeground(new java.awt.Color(0, 51, 102));
@@ -260,43 +268,43 @@ public class GUISignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_lblRegistrarseMouseExited
 
     private void txtCorreoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCorreoMousePressed
-        if(txtCorreo.getText().equals("Ingrese su correo institucional")){
+        if (txtCorreo.getText().equals("Ingrese su correo institucional")) {
             txtCorreo.setText("");
             txtCorreo.setForeground(Color.black);
         }
-        if(String.valueOf(txtConrtaseña.getPassword()).isEmpty()){
+        if (String.valueOf(txtConrtaseña.getPassword()).isEmpty()) {
             txtConrtaseña.setText("**********");
             txtConrtaseña.setForeground(Color.gray);
         }
-        if(txtNombres.getText().isEmpty()){
+        if (txtNombres.getText().isEmpty()) {
             txtNombres.setText("Ingrese su/s nombre/s");
             txtNombres.setForeground(Color.gray);
         }
-        if(txtApellidos.getText().isEmpty()){
+        if (txtApellidos.getText().isEmpty()) {
             txtApellidos.setText("Ingrese sus apellidos");
             txtApellidos.setForeground(Color.gray);
         }
     }//GEN-LAST:event_txtCorreoMousePressed
 
     private void txtConrtaseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtConrtaseñaMousePressed
-        if(String.valueOf(txtConrtaseña.getPassword()).equals("**********")){
+        if (String.valueOf(txtConrtaseña.getPassword()).equals("**********")) {
             txtConrtaseña.setText("");
             txtConrtaseña.setForeground(Color.black);
         }
-        if(txtCorreo.getText().isEmpty()){
+        if (txtCorreo.getText().isEmpty()) {
             txtCorreo.setText("Ingrese su correo institucional");
             txtCorreo.setForeground(Color.gray);
         }
-        if(txtNombres.getText().isEmpty()){
+        if (txtNombres.getText().isEmpty()) {
             txtNombres.setText("Ingrese su/s nombre/s");
             txtNombres.setForeground(Color.gray);
         }
-        if(txtApellidos.getText().isEmpty()){
+        if (txtApellidos.getText().isEmpty()) {
             txtApellidos.setText("Ingrese sus apellidos");
             txtApellidos.setForeground(Color.gray);
         }
     }//GEN-LAST:event_txtConrtaseñaMousePressed
-    
+
     // Método para validar JTextField
     private boolean esCampoInvalido(JTextField campo, String placeholder) {
         return campo.getText().trim().isEmpty() || campo.getText().equals(placeholder);
@@ -308,54 +316,54 @@ public class GUISignUp extends javax.swing.JFrame {
         return texto.trim().isEmpty() || texto.equals(placeholder);
     }
 
-    
+
     private void lblBotonRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonRegistrarseMouseClicked
-        if (esCampoInvalido(txtCorreo, "Ingrese su correo institucional") ||
-            esCampoInvalido(txtConrtaseña, "**********") ||
-            esCampoInvalido(txtNombres, "Ingrese su/s nombre/s") ||
-            esCampoInvalido(txtApellidos, "Ingrese sus apellidos")){
+        if (esCampoInvalido(txtCorreo, "Ingrese su correo institucional")
+                || esCampoInvalido(txtConrtaseña, "**********")
+                || esCampoInvalido(txtNombres, "Ingrese su/s nombre/s")
+                || esCampoInvalido(txtApellidos, "Ingrese sus apellidos")) {
             JOptionPane.showMessageDialog(
-                null,
-                "Por favor, rellene todos los campos.",
-                "Campos incompletos",
-                JOptionPane.WARNING_MESSAGE
+                    null,
+                    "Por favor, rellene todos los campos.",
+                    "Campos incompletos",
+                    JOptionPane.WARNING_MESSAGE
             );
         }
     }//GEN-LAST:event_lblBotonRegistrarseMouseClicked
 
     private void txtNombresMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombresMousePressed
-        if(txtNombres.getText().equals("Ingrese su/s nombre/s")){
+        if (txtNombres.getText().equals("Ingrese su/s nombre/s")) {
             txtNombres.setText("");
             txtNombres.setForeground(Color.black);
         }
-        if(String.valueOf(txtConrtaseña.getPassword()).isEmpty()){
+        if (String.valueOf(txtConrtaseña.getPassword()).isEmpty()) {
             txtConrtaseña.setText("**********");
             txtConrtaseña.setForeground(Color.gray);
         }
-        if(txtCorreo.getText().isEmpty()){
+        if (txtCorreo.getText().isEmpty()) {
             txtCorreo.setText("Ingrese su correo institucional");
             txtCorreo.setForeground(Color.gray);
         }
-        if(txtApellidos.getText().isEmpty()){
+        if (txtApellidos.getText().isEmpty()) {
             txtApellidos.setText("Ingrese sus apellidos");
             txtApellidos.setForeground(Color.gray);
         }
     }//GEN-LAST:event_txtNombresMousePressed
 
     private void txtApellidosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtApellidosMousePressed
-        if(txtApellidos.getText().equals("Ingrese sus apellidos")){
+        if (txtApellidos.getText().equals("Ingrese sus apellidos")) {
             txtApellidos.setText("");
             txtApellidos.setForeground(Color.black);
         }
-        if(String.valueOf(txtConrtaseña.getPassword()).isEmpty()){
+        if (String.valueOf(txtConrtaseña.getPassword()).isEmpty()) {
             txtConrtaseña.setText("**********");
             txtConrtaseña.setForeground(Color.gray);
         }
-        if(txtCorreo.getText().isEmpty()){
+        if (txtCorreo.getText().isEmpty()) {
             txtCorreo.setText("Ingrese su correo institucional");
             txtCorreo.setForeground(Color.gray);
         }
-        if(txtNombres.getText().isEmpty()){
+        if (txtNombres.getText().isEmpty()) {
             txtNombres.setText("Ingrese su/s nombre/s");
             txtNombres.setForeground(Color.gray);
         }
@@ -389,14 +397,24 @@ public class GUISignUp extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUISignUp().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new GUISignUp().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            co.unicauca.workflow.degree_project.access.IUserRepository repo
+                    = co.unicauca.workflow.degree_project.access.Factory.getInstance().getRepository("default");
+            co.unicauca.workflow.degree_project.domain.entities.IPasswordHasher hasher
+                    = new co.unicauca.workflow.degree_project.domain.services.Argon2PasswordHasher();
+            co.unicauca.workflow.degree_project.domain.services.IRegistrationService regSvc
+                    = new co.unicauca.workflow.degree_project.domain.services.UserService(repo, hasher);
+
+            new GUISignUp(regSvc).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BotonRegistrarse;
     private javax.swing.JLabel Escudo;
-    private javax.swing.JComboBox<String> cbxPrograma;
-    private javax.swing.JComboBox<String> cbxRol;
+    private javax.swing.JComboBox<Programa> cbxPrograma;
+    private javax.swing.JComboBox<Rol> cbxRol;
     private javax.swing.JPanel jBackGround;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblApellidos;
