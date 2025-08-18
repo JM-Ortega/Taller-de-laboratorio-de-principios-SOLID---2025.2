@@ -7,6 +7,7 @@
 .mtj.tmp/
 hs_err_pid*
 replay_pid*
+*.tmp
 
 # Packaged files
 *.jar
@@ -21,6 +22,7 @@ replay_pid*
 #  Maven
 # =========================
 /target/
+/degree_project/target/
 /.mvn/wrapper/maven-wrapper.jar
 
 # =========================
@@ -32,27 +34,29 @@ dist/
 nbdist/
 build/
 .nb-gradle/
-nb-configuration.xml
+# sube nbproject/ si lo usas, ignora solo private
 
 # =========================
 #  IntelliJ IDEA
 # =========================
-.idea/
 *.iml
 out/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/**/httpRequests
+# (puedes subir codeStyles/ y runConfigurations/ si trabajas en equipo)
 
 # =========================
 #  JavaFX Scene Builder
 # =========================
 *.fxml~
-*.bak
 
 # =========================
 #  Swing (Matisse / GUI Builder)
 # =========================
-# IntelliJ Swing GUI Designer forms
-*.form
-# NetBeans Matisse backup files
+# (NO ignores .form si quieres versionar pantallas)
 *Form.java.bak
 *.java.bak
 *.java.tmp
@@ -60,9 +64,7 @@ out/
 # =========================
 #  Temporary & system files
 # =========================
-*.tmp
 .DS_Store
 Thumbs.db
 .Trash-*
 .nfs*
-/degree_project/target/
