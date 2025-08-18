@@ -8,4 +8,6 @@ public interface IUserRepository {
     String getRol(String email, String password);
     
     String getPassword(String email);
+    
+    boolean existsByEmail(String email);
 }
