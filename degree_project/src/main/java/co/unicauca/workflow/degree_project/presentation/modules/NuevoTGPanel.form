@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel1" min="-2" pref="461" max="-2" attributes="0"/>
+                  <Component id="jLabel2" min="-2" pref="461" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="473" max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Component id="jLabel2" min="-2" pref="214" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="214" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&apos;width:360px;&apos;&gt; &lt;ul style=&quot;margin:0;padding-left:16px;&quot;&gt;   &lt;li&gt;T&#xed;tulo del Trabajo&lt;/li&gt;   &lt;li&gt;Modalidad (Anteproyecto / Monograf&#xed;a / Proyecto aplicado)&lt;/li&gt;   &lt;li&gt;Resumen (3&#x2013;5 l&#xed;neas)&lt;/li&gt;   &lt;li&gt;Palabras clave (opcional)&lt;/li&gt; &lt;/ul&gt; &lt;/div&gt;&lt;/html&gt; "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&apos;width:360px&apos;&gt; Completa el formulario para crear tu &lt;b&gt;Trabajo de Grado&lt;/b&gt;. Ingresa &lt;b&gt;t&#xed;tulo&lt;/b&gt;, &lt;b&gt;modalidad&lt;/b&gt; y un &lt;b&gt;resumen breve&lt;/b&gt;.  Luego podr&#xe1;s enviarlo para revisi&#xf3;n. &lt;/div&gt;&lt;/html&gt; "/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
