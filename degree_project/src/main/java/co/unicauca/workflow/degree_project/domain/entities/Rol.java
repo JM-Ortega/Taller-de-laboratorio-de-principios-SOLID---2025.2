@@ -9,6 +9,17 @@ package co.unicauca.workflow.degree_project.domain.entities;
  * @author Ortega
  */
 public enum Rol {
-    Estudiante,
-    Docente
+    Estudiante("Estudiante"),
+    Docente("Docente");
+    
+    private final String displayName;
+    
+    Rol(String displayName) { 
+        this.displayName = displayName; }
+    
+    
+    @Override
+    public String toString() {
+        return displayName;
+    }
 }
