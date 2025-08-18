@@ -1,6 +1,5 @@
 package co.unicauca.workflow.degree_project.access;
 
-
 public class Factory {
     private static Factory instance;
     

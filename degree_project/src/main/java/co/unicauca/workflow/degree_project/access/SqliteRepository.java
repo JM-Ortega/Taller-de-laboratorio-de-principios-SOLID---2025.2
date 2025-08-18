@@ -1,6 +1,7 @@
 package co.unicauca.workflow.degree_project.access;
 
 import co.unicauca.workflow.degree_project.domain.entities.User;
+import co.unicauca.workflow.degree_project.domain.services.Argon2PasswordHasher;
 import co.unicauca.workflow.degree_project.domain.services.UserService;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,13 +13,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SqliteRepository implements IUserRepository{
-    private Connection conn;
+    private static Connection conn;
     
     public SqliteRepository(){
         initDatabase();
     }
     
     private void initDatabase(){
+        if (conn != null) return;
+        
         String sql1 = "CREATE TABLE IF NOT EXISTS Rol (\n"
                 + "idRol integer PRIMARY KEY,\n"
                 + "tipo text NOT NULL UNIQUE"
@@ -60,6 +63,7 @@ public class SqliteRepository implements IUserRepository{
     }
     
     public void connect(){
+        if (conn != null) return;
         String url = "jdbc:sqlite::memory:";
         
         try {
@@ -106,7 +110,7 @@ public class SqliteRepository implements IUserRepository{
             pstmt.setInt(6, newUser.getRol().ordinal()+1);
             pstmt.setString(7, newUser.getPasswordHash());
             pstmt.executeUpdate();
-            
+                    
             return true;
         }catch(SQLException ex){
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
@@ -115,21 +119,26 @@ public class SqliteRepository implements IUserRepository{
     }
 
     @Override
-    public String getRol(String email, String password) {
+    public String getRol(String email, char[] passwordIngresada) {
         String rol = null;
-        String sql = "SELECT Rol.tipo "
-                + "FROM User "
-                + "INNER JOIN Rol ON User.idRol = Rol.idRol "
-                + "WHERE User.email = ? AND User.contraseña = ?";
+        String sql = "SELECT User.contraseña, Rol.tipo "
+                   + "FROM User "
+                   + "INNER JOIN Rol ON User.idRol = Rol.idRol "
+                   + "WHERE User.email = ?";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, email);
-            pstmt.setString(2, password);
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                rol = rs.getString("tipo");
+                String passwordHasheadaBD = rs.getString("contraseña");
+                String tipoRol = rs.getString("tipo");
+
+                Argon2PasswordHasher hasher = new Argon2PasswordHasher();
+                if (hasher.verify(passwordIngresada, passwordHasheadaBD)) {
+                    rol = tipoRol;
+                }
             }
             rs.close();
             pstmt.close();
@@ -162,5 +171,12 @@ public class SqliteRepository implements IUserRepository{
         }
 
         return password;
+    }
+    
+    @Override
+    public boolean validarIngrereso(String email, char[] passwordIngresada){
+        String passwordHasheadaBD = getPassword(email);
+        Argon2PasswordHasher hasher = new Argon2PasswordHasher();
+        return hasher.verify(passwordIngresada, passwordHasheadaBD);
     }
 }
