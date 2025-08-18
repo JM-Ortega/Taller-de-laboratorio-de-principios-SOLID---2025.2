@@ -29,10 +29,19 @@ public class UserService implements IRegistrationService {
         Set<ConstraintViolation<RegisterUserDTO>> v = validator.validate(dto);
         if (!v.isEmpty()) {
             Map<String, String> fe = new LinkedHashMap<>();
+            Map<String, Integer> prioPorCampo = new LinkedHashMap<>();
+
             for (var e : v) {
-                fe.putIfAbsent(e.getPropertyPath().toString(), e.getMessage());
+                String field = e.getPropertyPath().toString();
+                int pr = prioridad(e);
+                Integer actual = prioPorCampo.get(field);
+                if (actual == null || pr < actual) {
+                    prioPorCampo.put(field, pr);
+                    fe.put(field, e.getMessage());
+                }
             }
             return RegistrationResult.fail("Errores de validación", fe);
+
         }
 
         String email = dto.getEmail().trim().toLowerCase();
@@ -57,4 +66,26 @@ public class UserService implements IRegistrationService {
         return ok ? RegistrationResult.ok(u.getId())
                 : RegistrationResult.fail("No se pudo guardar el usuario.");
     }
+
+    private static int prioridad(ConstraintViolation<?> v) {
+        Class<?> ann = v.getConstraintDescriptor().getAnnotation().annotationType();
+
+        if (ann == jakarta.validation.constraints.NotBlank.class
+                || ann == jakarta.validation.constraints.NotNull.class) {
+            return 1;
+        }
+
+        if (ann == jakarta.validation.constraints.Size.class) {
+            return 2;
+        }
+        if (ann == jakarta.validation.constraints.Email.class) {
+            return 3;
+        }
+        if (ann == jakarta.validation.constraints.Pattern.class) {
+            return 4;
+        }
+
+        return 99;
+    }
+
 }
