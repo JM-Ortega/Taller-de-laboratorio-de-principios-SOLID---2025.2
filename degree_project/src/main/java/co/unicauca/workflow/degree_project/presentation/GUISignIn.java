@@ -125,7 +125,7 @@ public class GUISignIn extends javax.swing.JFrame {
         lblBotonIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBotonIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblBotonIngresarMouseClicked(evt);
+                //lblBotonIngresarMouseClicked(evt);
             }
         });
 
@@ -153,7 +153,7 @@ public class GUISignIn extends javax.swing.JFrame {
         lblRegistrarse.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblRegistrarseMouseClicked(evt);
+                //lblRegistrarseMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblRegistrarseMouseEntered(evt);
@@ -220,7 +220,7 @@ public class GUISignIn extends javax.swing.JFrame {
         String texto = String.valueOf(campo.getPassword());
         return texto.trim().isEmpty() || texto.equals(placeholder);
     }
-    
+    /*
     private void lblBotonIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonIngresarMouseClicked
         String usuario = txtCorreo.getText();
         String contraseña = String.valueOf(txtConrtaseña.getPassword());
@@ -255,7 +255,7 @@ public class GUISignIn extends javax.swing.JFrame {
         iniciar.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblRegistrarseMouseClicked
-
+*/
     /**
      * @param args the command line arguments
      */
