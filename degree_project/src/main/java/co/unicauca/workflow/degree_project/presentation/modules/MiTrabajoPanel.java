@@ -11,7 +11,7 @@ package co.unicauca.workflow.degree_project.presentation.modules;
 public class MiTrabajoPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form PrincipalEstudiante
+     * Creates new form MiTrabajoPanel
      */
    public MiTrabajoPanel() {
         initComponents();

@@ -1,7 +1,5 @@
 package co.unicauca.workflow.degree_project.presentation;
 
-import co.unicauca.workflow.degree_project.presentation.modules.EvaluarAnteP;
-import co.unicauca.workflow.degree_project.presentation.modules.EvaluarMon;
 import co.unicauca.workflow.degree_project.presentation.modules.NuevoTGPanel;
 import co.unicauca.workflow.degree_project.presentation.modules.MiTrabajoPanel;
 import co.unicauca.workflow.degree_project.presentation.modules.PrincipalEstudiantePanel;
@@ -11,7 +9,7 @@ import javax.swing.JPanel;
 public class GUIEstudiante extends javax.swing.JFrame {
 
     /**
-     * Creates new form GUIDocente
+     * Creates new form GUIEstudiante
      */
     public GUIEstudiante() {
         initComponents();
