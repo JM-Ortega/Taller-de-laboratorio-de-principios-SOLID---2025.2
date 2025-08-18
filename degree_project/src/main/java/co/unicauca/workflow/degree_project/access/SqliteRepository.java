@@ -11,28 +11,29 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SqliteRepository implements IUserRepository{
+public class SqliteRepository implements IUserRepository {
+
     private Connection conn;
-    
-    public SqliteRepository(){
+
+    public SqliteRepository() {
         initDatabase();
     }
-    
-    private void initDatabase(){
+
+    private void initDatabase() {
         String sql1 = "CREATE TABLE IF NOT EXISTS Rol (\n"
                 + "idRol integer PRIMARY KEY,\n"
                 + "tipo text NOT NULL UNIQUE"
-                +");";
-        
+                + ");";
+
         String sql2 = "CREATE TABLE IF NOT EXISTS Programa (\n"
                 + "idPrograma integer PRIMARY KEY,\n"
                 + "tipo text NOT NULL UNIQUE"
-                +");";
-        
+                + ");";
+
         String sql3 = "INSERT OR IGNORE INTO Rol(tipo) VALUES ('Estudiante'), ('Docente');\n";
-                
+
         String sql4 = "INSERT OR IGNORE INTO Programa(tipo) VALUES ('Ingenieria_de_Sistemas'), ('Ingenieria_Electronica_y_Telecomunicaciones'), ('Automatica_Industrial'), ('Tecnologia_en_Telematica');\n";
-    
+
         String sql5 = "CREATE TABLE IF NOT EXISTS User (\n"
                 + "nombres text NOT NULL,\n"
                 + "apellidos text NOT NULL, \n"
@@ -44,9 +45,9 @@ public class SqliteRepository implements IUserRepository{
                 + "PRIMARY KEY (email, contraseña), \n"
                 + "FOREIGN KEY (idRol) REFERENCES Rol(idRol), \n"
                 + "FOREIGN KEY (idPrograma) REFERENCES Programa(idPrograma)\n"
-                +");";
-        
-        try{
+                + ");";
+
+        try {
             this.connect();
             Statement stmt = conn.createStatement();
             stmt.execute(sql1);
@@ -54,14 +55,14 @@ public class SqliteRepository implements IUserRepository{
             stmt.execute(sql3);
             stmt.execute(sql4);
             stmt.execute(sql5);
-        }catch(SQLException ex){
-              Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);      
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void connect(){
+
+    public void connect() {
         String url = "jdbc:sqlite::memory:";
-        
+
         try {
             conn = DriverManager.getConnection(url);
 
@@ -69,8 +70,8 @@ public class SqliteRepository implements IUserRepository{
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void disconnect(){
+
+    public void disconnect() {
         try {
             if (conn != null) {
                 conn.close();
@@ -79,19 +80,18 @@ public class SqliteRepository implements IUserRepository{
             System.out.println(ex.getMessage());
         }
     }
-    
+
     @Override
     public boolean save(User newUser) {
-        try{
+        try {
             if (newUser == null
-            || newUser.getEmail() == null || newUser.getEmail().isBlank()
-            || !newUser.getEmail().endsWith("@unicauca.edu.co")
-            || newUser.getNombres() == null || newUser.getNombres().isBlank()
-            || newUser.getApellidos() == null || newUser.getApellidos().isBlank()
-            || newUser.getPrograma() == null
-            || newUser.getRol() == null
-            || newUser.getPasswordHash() == null || newUser.getPasswordHash().isBlank())
-            { 
+                    || newUser.getEmail() == null || newUser.getEmail().isBlank()
+                    || !newUser.getEmail().endsWith("@unicauca.edu.co")
+                    || newUser.getNombres() == null || newUser.getNombres().isBlank()
+                    || newUser.getApellidos() == null || newUser.getApellidos().isBlank()
+                    || newUser.getPrograma() == null
+                    || newUser.getRol() == null
+                    || newUser.getPasswordHash() == null || newUser.getPasswordHash().isBlank()) {
                 return false;
             }
             String sql = "INSERT INTO User ( nombres, apellidos, idPrograma,  email, celular, idRol, contraseña) "
@@ -100,15 +100,15 @@ public class SqliteRepository implements IUserRepository{
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, newUser.getNombres());
             pstmt.setString(2, newUser.getApellidos());
-            pstmt.setInt(3, newUser.getPrograma().ordinal()+1);
+            pstmt.setInt(3, newUser.getPrograma().ordinal() + 1);
             pstmt.setString(4, newUser.getEmail());
             pstmt.setString(5, newUser.getCelular());
-            pstmt.setInt(6, newUser.getRol().ordinal()+1);
+            pstmt.setInt(6, newUser.getRol().ordinal() + 1);
             pstmt.setString(7, newUser.getPasswordHash());
             pstmt.executeUpdate();
-            
+
             return true;
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
@@ -163,4 +163,18 @@ public class SqliteRepository implements IUserRepository{
 
         return password;
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        String sql = "SELECT 1 FROM User WHERE email = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

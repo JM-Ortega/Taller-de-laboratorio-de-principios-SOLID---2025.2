@@ -18,13 +18,14 @@ import jakarta.validation.constraints.Size;
  */
 public class RegisterUserDTO {
 
+
     @NotBlank(message = "El nombre es obligatorio")
     private String nombres;
 
     @NotBlank(message = "El apellido es obligatorio")
     private String apellidos;
 
-    @Pattern(regexp = "\\d{10}", message = "Si ingresas celular, debe tener 10 dígitos")
+    @Pattern(regexp = "\\d{10}", message = "<html>Si ingresas celular, debe tener 10 dígitos</html>")
     private String celular;
 
     @NotNull(message = "El programa es obligatorio")
@@ -37,15 +38,15 @@ public class RegisterUserDTO {
     @Email(message = "El formato del email no es válido")
     @Pattern(
             regexp = "(?i)^[A-Za-z0-9._%+-]+@unicauca\\.edu\\.co$",
-            message = "El correo debe ser de la Universidad del Cauca (@unicauca.edu.co)"
+            message = "<html>El correo debe ser de la Universidad<br>@unicauca.edu.co</html>"
     )
     private String email;
 
     @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
+    @Size(min = 6, message = "<html>La contraseña debe tener al menos 6 caracteres</html>")
     @Pattern(
             regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!¿?*._-]).{6,}$",
-            message = "La contraseña debe tener al menos un dígito, una mayúscula y un carácter especial"
+            message = "<html>La contraseña debe tener al menos un dígito, una mayúscula y un carácter especial</html>"
     )
     private String password;
 

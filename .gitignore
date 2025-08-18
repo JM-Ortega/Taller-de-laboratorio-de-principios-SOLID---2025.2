@@ -28,6 +28,7 @@ replay_pid*
 # =========================
 #  NetBeans
 # =========================
+/degree_project/nbproject/
 nbproject/private/
 nbbuild/
 dist/
