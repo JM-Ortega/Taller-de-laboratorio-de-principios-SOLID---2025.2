@@ -10,4 +10,7 @@ public interface IUserRepository {
     String getPassword(String email);
     
     boolean validarIngrereso(String email, char[] passwordIngresada);
+
+    boolean existsByEmail(String email);
+
 }

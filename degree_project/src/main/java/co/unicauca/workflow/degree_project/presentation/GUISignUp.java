@@ -4,6 +4,9 @@
  */
 package co.unicauca.workflow.degree_project.presentation;
 
+import co.unicauca.workflow.degree_project.domain.entities.Programa;
+import co.unicauca.workflow.degree_project.domain.entities.Rol;
+import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JOptionPane;
@@ -16,13 +19,16 @@ import javax.swing.SwingUtilities;
  * @author Laura
  */
 public class GUISignUp extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUISignUp.class.getName());
+
+    private final IRegistrationService registration;
 
     /**
      * Creates new form GUIPrueba
      */
-    public GUISignUp() {
+    public GUISignUp(IRegistrationService registration) {
+        this.registration = registration;
         initComponents();
         this.setLocationRelativeTo(null);
         SwingUtilities.invokeLater(() -> {
@@ -63,6 +69,14 @@ public class GUISignUp extends javax.swing.JFrame {
         lblRol = new javax.swing.JLabel();
         cbxRol = new javax.swing.JComboBox<>();
         lblCondiciones = new javax.swing.JLabel();
+        lblErrorContraseña = new javax.swing.JLabel();
+        lblErrorApellido = new javax.swing.JLabel();
+        lblErrorNombre = new javax.swing.JLabel();
+        lblErrorUsuario = new javax.swing.JLabel();
+        lblErrorCelular = new javax.swing.JLabel();
+        lblCelular = new javax.swing.JLabel();
+        txtCelular = new javax.swing.JTextField();
+        sepUsuario3 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -80,46 +94,52 @@ public class GUISignUp extends javax.swing.JFrame {
 
         lblNoCuenta.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         lblNoCuenta.setText("¿Ya tienes una cuenta?");
-        jBackGround.add(lblNoCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 420, -1, -1));
+        jBackGround.add(lblNoCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 460, -1, -1));
 
         txtCorreo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(102, 102, 102));
         txtCorreo.setText("Ingrese su correo institucional");
         txtCorreo.setBorder(null);
-        txtCorreo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtCorreoMousePressed(evt);
+        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCorreoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCorreoFocusLost(evt);
             }
         });
-        jBackGround.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, 290, 20));
+        jBackGround.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 140, 290, 20));
 
         sepUsuario.setBackground(new java.awt.Color(255, 255, 255));
         sepUsuario.setForeground(new java.awt.Color(0, 102, 204));
         sepUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         sepUsuario.setPreferredSize(new java.awt.Dimension(270, 10));
-        jBackGround.add(sepUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, -1, -1));
+        jBackGround.add(sepUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, -1, -1));
 
         lblConrtaseña.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
         lblConrtaseña.setText("CONTRASEÑA");
-        jBackGround.add(lblConrtaseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 130, -1));
+        jBackGround.add(lblConrtaseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, 130, 30));
 
         txtConrtaseña.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtConrtaseña.setForeground(new java.awt.Color(102, 102, 102));
         txtConrtaseña.setText("**********");
         txtConrtaseña.setBorder(null);
         txtConrtaseña.setPreferredSize(new java.awt.Dimension(270, 20));
-        txtConrtaseña.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtConrtaseñaMousePressed(evt);
+        txtConrtaseña.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtConrtaseñaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtConrtaseñaFocusLost(evt);
             }
         });
-        jBackGround.add(txtConrtaseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 240, 270, 20));
+        jBackGround.add(txtConrtaseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 210, 290, 20));
 
         sepContraseña.setBackground(new java.awt.Color(255, 255, 255));
         sepContraseña.setForeground(new java.awt.Color(0, 102, 204));
         sepContraseña.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         sepContraseña.setPreferredSize(new java.awt.Dimension(270, 10));
-        jBackGround.add(sepContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, -1, -1));
+        jBackGround.add(sepContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 230, -1, -1));
 
         BotonRegistrarse.setBackground(new java.awt.Color(0, 102, 204));
 
@@ -147,11 +167,11 @@ public class GUISignUp extends javax.swing.JFrame {
                 .addComponent(lblBotonRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jBackGround.add(BotonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 360, 120, 40));
+        jBackGround.add(BotonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, 120, 40));
 
         lblUsuario.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
         lblUsuario.setText("USUARIO");
-        jBackGround.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 80, -1));
+        jBackGround.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 90, 20));
 
         lblRegistrarse.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         lblRegistrarse.setText("Inicia sesión");
@@ -167,73 +187,125 @@ public class GUISignUp extends javax.swing.JFrame {
                 lblRegistrarseMouseExited(evt);
             }
         });
-        jBackGround.add(lblRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 420, 70, -1));
+        jBackGround.add(lblRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, 70, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Paisaje recortado.jpg"))); // NOI18N
         jBackGround.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 90));
 
         lblNombres.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
         lblNombres.setText("NOMBRES");
-        jBackGround.add(lblNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 90, -1));
+        jBackGround.add(lblNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 100, 20));
 
         txtNombres.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtNombres.setForeground(new java.awt.Color(102, 102, 102));
         txtNombres.setText("Ingrese su/s nombre/s");
         txtNombres.setBorder(null);
-        txtNombres.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtNombresMousePressed(evt);
+        txtNombres.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtNombresFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombresFocusLost(evt);
             }
         });
-        jBackGround.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 290, 20));
+        jBackGround.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 290, 20));
 
         sepUsuario1.setBackground(new java.awt.Color(255, 255, 255));
         sepUsuario1.setForeground(new java.awt.Color(0, 102, 204));
         sepUsuario1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         sepUsuario1.setPreferredSize(new java.awt.Dimension(270, 10));
-        jBackGround.add(sepUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        jBackGround.add(sepUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 270, -1));
 
         lblApellidos.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
         lblApellidos.setText("APELLIDOS");
-        jBackGround.add(lblApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 100, -1));
+        jBackGround.add(lblApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 110, 20));
 
         txtApellidos.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtApellidos.setForeground(new java.awt.Color(102, 102, 102));
         txtApellidos.setText("Ingrese sus apellidos");
         txtApellidos.setBorder(null);
-        txtApellidos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtApellidosMousePressed(evt);
+        txtApellidos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtApellidosFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtApellidosFocusLost(evt);
             }
         });
-        jBackGround.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 290, 20));
+        jBackGround.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 290, 20));
 
         sepUsuario2.setBackground(new java.awt.Color(255, 255, 255));
         sepUsuario2.setForeground(new java.awt.Color(0, 102, 204));
         sepUsuario2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         sepUsuario2.setPreferredSize(new java.awt.Dimension(270, 10));
-        jBackGround.add(sepUsuario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
+        jBackGround.add(sepUsuario2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 270, -1));
 
         lblPrograma.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
         lblPrograma.setText("SELECCIONE SU PROGRAMA");
-        jBackGround.add(lblPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
+        jBackGround.add(lblPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 260, -1));
 
         cbxPrograma.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxPrograma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingeniería de Sistemas", "Ingeniería Electrónica", "Telecomunicaciones", "Automática industrial", "Tecnología en Telemática" }));
-        jBackGround.add(cbxPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 270, -1));
+        cbxPrograma.setModel(new javax.swing.DefaultComboBoxModel<>(co.unicauca.workflow.degree_project.domain.entities.Programa.values()));
+        cbxPrograma.setSelectedIndex(0);
+        jBackGround.add(cbxPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 290, -1));
 
         lblRol.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
         lblRol.setText("SELECCIONE SU ROL");
-        jBackGround.add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
+        jBackGround.add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 190, -1));
 
         cbxRol.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estudiante", "Docente" }));
-        jBackGround.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 270, -1));
+        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(co.unicauca.workflow.degree_project.domain.entities.Rol.values()));
+        cbxRol.setSelectedIndex(0);
+        jBackGround.add(cbxRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 290, -1));
 
         lblCondiciones.setForeground(new java.awt.Color(0, 51, 102));
         lblCondiciones.setText("<html><div style='width:200px;'>* La contraseña debe tener mínimo 6 caracteres, al menos un dígito, al menos un carácter especial y al menos una mayúscula </div></html>\n");
         lblCondiciones.setToolTipText("");
-        jBackGround.add(lblCondiciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, -1, -1));
+        jBackGround.add(lblCondiciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 270, -1));
+
+        lblErrorContraseña.setForeground(new java.awt.Color(255, 0, 51));
+        lblErrorContraseña.setText(" ");
+        jBackGround.add(lblErrorContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 240, 50));
+
+        lblErrorApellido.setForeground(new java.awt.Color(255, 0, 51));
+        lblErrorApellido.setText(" ");
+        jBackGround.add(lblErrorApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 190, 20));
+
+        lblErrorNombre.setForeground(new java.awt.Color(255, 0, 51));
+        lblErrorNombre.setText(" ");
+        jBackGround.add(lblErrorNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 200, 20));
+
+        lblErrorUsuario.setForeground(new java.awt.Color(255, 0, 51));
+        lblErrorUsuario.setText(" ");
+        jBackGround.add(lblErrorUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, 280, 40));
+
+        lblErrorCelular.setForeground(new java.awt.Color(255, 0, 51));
+        lblErrorCelular.setText(" ");
+        jBackGround.add(lblErrorCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 300, 220, 30));
+
+        lblCelular.setFont(new java.awt.Font("Roboto Light", 1, 18)); // NOI18N
+        lblCelular.setText("Celular");
+        jBackGround.add(lblCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 90, 20));
+
+        txtCelular.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtCelular.setForeground(new java.awt.Color(102, 102, 102));
+        txtCelular.setText("(opcional) Digite un numero de celular");
+        txtCelular.setBorder(null);
+        txtCelular.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCelularFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCelularFocusLost(evt);
+            }
+        });
+        jBackGround.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 330, 290, 20));
+
+        sepUsuario3.setBackground(new java.awt.Color(255, 255, 255));
+        sepUsuario3.setForeground(new java.awt.Color(0, 102, 204));
+        sepUsuario3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        sepUsuario3.setPreferredSize(new java.awt.Dimension(270, 10));
+        jBackGround.add(sepUsuario3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 350, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -259,44 +331,6 @@ public class GUISignUp extends javax.swing.JFrame {
         lblRegistrarse.setFont(new Font("Roboto", Font.PLAIN, 12));
     }//GEN-LAST:event_lblRegistrarseMouseExited
 
-    private void txtCorreoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCorreoMousePressed
-        if(txtCorreo.getText().equals("Ingrese su correo institucional")){
-            txtCorreo.setText("");
-            txtCorreo.setForeground(Color.black);
-        }
-        if(String.valueOf(txtConrtaseña.getPassword()).isEmpty()){
-            txtConrtaseña.setText("**********");
-            txtConrtaseña.setForeground(Color.gray);
-        }
-        if(txtNombres.getText().isEmpty()){
-            txtNombres.setText("Ingrese su/s nombre/s");
-            txtNombres.setForeground(Color.gray);
-        }
-        if(txtApellidos.getText().isEmpty()){
-            txtApellidos.setText("Ingrese sus apellidos");
-            txtApellidos.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtCorreoMousePressed
-
-    private void txtConrtaseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtConrtaseñaMousePressed
-        if(String.valueOf(txtConrtaseña.getPassword()).equals("**********")){
-            txtConrtaseña.setText("");
-            txtConrtaseña.setForeground(Color.black);
-        }
-        if(txtCorreo.getText().isEmpty()){
-            txtCorreo.setText("Ingrese su correo institucional");
-            txtCorreo.setForeground(Color.gray);
-        }
-        if(txtNombres.getText().isEmpty()){
-            txtNombres.setText("Ingrese su/s nombre/s");
-            txtNombres.setForeground(Color.gray);
-        }
-        if(txtApellidos.getText().isEmpty()){
-            txtApellidos.setText("Ingrese sus apellidos");
-            txtApellidos.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtConrtaseñaMousePressed
-    
     // Método para validar JTextField
     private boolean esCampoInvalido(JTextField campo, String placeholder) {
         return campo.getText().trim().isEmpty() || campo.getText().equals(placeholder);
@@ -308,64 +342,159 @@ public class GUISignUp extends javax.swing.JFrame {
         return texto.trim().isEmpty() || texto.equals(placeholder);
     }
 
-    
+
     private void lblBotonRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonRegistrarseMouseClicked
-        if (esCampoInvalido(txtCorreo, "Ingrese su correo institucional") ||
-            esCampoInvalido(txtConrtaseña, "**********") ||
-            esCampoInvalido(txtNombres, "Ingrese su/s nombre/s") ||
-            esCampoInvalido(txtApellidos, "Ingrese sus apellidos")){
-            JOptionPane.showMessageDialog(
-                null,
-                "Por favor, rellene todos los campos.",
-                "Campos incompletos",
-                JOptionPane.WARNING_MESSAGE
-            );
+        clearFieldErrors();
+
+        // 1) Construir DTO normalizando placeholders
+        var dto = new co.unicauca.workflow.degree_project.presentation.dtos.RegisterUserDTO();
+        dto.setNombres(valueOrEmpty(txtNombres, "Ingrese su/s nombre/s"));
+        dto.setApellidos(valueOrEmpty(txtApellidos, "Ingrese sus apellidos"));
+        dto.setEmail(valueOrEmpty(txtCorreo, "Ingrese su correo institucional").toLowerCase());
+        dto.setPassword(valueOrEmpty(txtConrtaseña, "**********"));
+        dto.setPrograma((Programa) cbxPrograma.getSelectedItem());
+        dto.setRol((Rol) cbxRol.getSelectedItem());
+
+        final String CEL_PLACEHOLDER = "(opcional) Digite un numero de celular";
+        String cel = txtCelular.getText().trim();
+        dto.setCelular(cel.isEmpty() || CEL_PLACEHOLDER.equals(cel) ? null : cel);
+
+        var res = registration.register(dto);
+
+        if (!res.ok()) {
+            var fe = res.fieldErrors();
+            if (fe != null && !fe.isEmpty()) {
+                if (fe.containsKey("nombres")) {
+                    showError(lblErrorNombre, fe.get("nombres"));
+                }
+                if (fe.containsKey("apellidos")) {
+                    showError(lblErrorApellido, fe.get("apellidos"));
+                }
+                if (fe.containsKey("email")) {
+                    showError(lblErrorUsuario, fe.get("email"));
+                }
+                if (fe.containsKey("password")) {
+                    showError(lblErrorContraseña, fe.get("password"));
+                }
+                if (fe.containsKey("celular")) {
+                    showError(lblErrorCelular, fe.get("celular"));
+                }
+
+                if (fe.containsKey("programa")) {
+                    JOptionPane.showMessageDialog(this, fe.get("programa"), "Registro", JOptionPane.WARNING_MESSAGE);
+                }
+                if (fe.containsKey("rol")) {
+                    JOptionPane.showMessageDialog(this, fe.get("rol"), "Registro", JOptionPane.WARNING_MESSAGE);
+                }
+
+                /*
+            StringBuilder sb = new StringBuilder("Errores de validación:\n\n");
+            fe.forEach((campo, msg) -> sb.append("- ").append(campo).append(": ").append(msg).append("\n"));
+            JOptionPane.showMessageDialog(this, sb.toString(), "Errores", JOptionPane.WARNING_MESSAGE);
+                 */
+            } else {
+                JOptionPane.showMessageDialog(this, res.message(), "Registro", JOptionPane.WARNING_MESSAGE);
+            }
+            return;
         }
+
+        JOptionPane.showMessageDialog(this, "¡Registro exitoso!", "Registro" , JOptionPane.INFORMATION_MESSAGE);
+       //TODO, redireccion a login
+       
+        GUISignIn iniciar = new GUISignIn();
+        iniciar.setVisible(true);
+        this.dispose();
+    
     }//GEN-LAST:event_lblBotonRegistrarseMouseClicked
-
-    private void txtNombresMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombresMousePressed
-        if(txtNombres.getText().equals("Ingrese su/s nombre/s")){
-            txtNombres.setText("");
-            txtNombres.setForeground(Color.black);
-        }
-        if(String.valueOf(txtConrtaseña.getPassword()).isEmpty()){
-            txtConrtaseña.setText("**********");
-            txtConrtaseña.setForeground(Color.gray);
-        }
-        if(txtCorreo.getText().isEmpty()){
-            txtCorreo.setText("Ingrese su correo institucional");
-            txtCorreo.setForeground(Color.gray);
-        }
-        if(txtApellidos.getText().isEmpty()){
-            txtApellidos.setText("Ingrese sus apellidos");
-            txtApellidos.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtNombresMousePressed
-
-    private void txtApellidosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtApellidosMousePressed
-        if(txtApellidos.getText().equals("Ingrese sus apellidos")){
-            txtApellidos.setText("");
-            txtApellidos.setForeground(Color.black);
-        }
-        if(String.valueOf(txtConrtaseña.getPassword()).isEmpty()){
-            txtConrtaseña.setText("**********");
-            txtConrtaseña.setForeground(Color.gray);
-        }
-        if(txtCorreo.getText().isEmpty()){
-            txtCorreo.setText("Ingrese su correo institucional");
-            txtCorreo.setForeground(Color.gray);
-        }
-        if(txtNombres.getText().isEmpty()){
-            txtNombres.setText("Ingrese su/s nombre/s");
-            txtNombres.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtApellidosMousePressed
 
     private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
         GUISignIn iniciar = new GUISignIn();
         iniciar.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblRegistrarseMouseClicked
+
+    private void txtCelularFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCelularFocusGained
+        if (txtCelular.getText().equals("(opcional) Digite un numero de celular")) {
+            txtCelular.setText("");
+            txtCelular.setForeground(Color.black);
+        }
+
+
+    }//GEN-LAST:event_txtCelularFocusGained
+
+    private void txtCelularFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCelularFocusLost
+        if (String.valueOf(txtCelular.getText()).isEmpty()) {
+            txtCelular.setText("(opcional) Digite un numero de celular");
+            txtCelular.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtCelularFocusLost
+
+    private void txtConrtaseñaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtConrtaseñaFocusGained
+        if (String.valueOf(txtConrtaseña.getPassword()).equals("**********")) {
+            txtConrtaseña.setText("");
+            txtConrtaseña.setForeground(Color.black);
+        }    }//GEN-LAST:event_txtConrtaseñaFocusGained
+
+    private void txtConrtaseñaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtConrtaseñaFocusLost
+        if (String.valueOf(txtConrtaseña.getPassword()).isEmpty()) {
+            txtConrtaseña.setText("**********");
+            txtConrtaseña.setForeground(Color.gray);
+        }    }//GEN-LAST:event_txtConrtaseñaFocusLost
+
+    private void txtCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusGained
+        if (txtCorreo.getText().equals("Ingrese su correo institucional")) {
+            txtCorreo.setText("");
+            txtCorreo.setForeground(Color.black);
+        }    }//GEN-LAST:event_txtCorreoFocusGained
+
+    private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
+        if (txtCorreo.getText().isEmpty()) {
+            txtCorreo.setText("Ingrese su correo institucional");
+            txtCorreo.setForeground(Color.gray);
+        }    }//GEN-LAST:event_txtCorreoFocusLost
+
+    private void txtNombresFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombresFocusGained
+        if (txtNombres.getText().equals("Ingrese su/s nombre/s")) {
+            txtNombres.setText("");
+            txtNombres.setForeground(Color.black);
+        }    }//GEN-LAST:event_txtNombresFocusGained
+
+    private void txtNombresFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombresFocusLost
+        if (txtNombres.getText().isEmpty()) {
+            txtNombres.setText("Ingrese su/s nombre/s");
+            txtNombres.setForeground(Color.gray);
+        }    }//GEN-LAST:event_txtNombresFocusLost
+
+    private void txtApellidosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellidosFocusGained
+        if (txtApellidos.getText().equals("Ingrese sus apellidos")) {
+            txtApellidos.setText("");
+            txtApellidos.setForeground(Color.black);
+        }    }//GEN-LAST:event_txtApellidosFocusGained
+
+    private void txtApellidosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtApellidosFocusLost
+        if (txtApellidos.getText().isEmpty()) {
+            txtApellidos.setText("Ingrese sus apellidos");
+            txtApellidos.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtApellidosFocusLost
+
+    private void clearFieldErrors() {
+        lblErrorUsuario.setVisible(false);
+        lblErrorContraseña.setVisible(false);
+        lblErrorNombre.setVisible(false);
+        lblErrorApellido.setVisible(false);
+        lblErrorCelular.setVisible(false);
+    }
+
+    private void showError(javax.swing.JLabel label, String msg) {
+        label.setText(msg);
+        label.setVisible(true);
+    }
+
+    private String valueOrEmpty(javax.swing.JTextField field, String placeholder) {
+        String txt = field.getText().trim();
+        return txt.equalsIgnoreCase(placeholder) ? "" : txt;
+    }
 
     /**
      * @param args the command line arguments
@@ -389,20 +518,35 @@ public class GUISignUp extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUISignUp().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            co.unicauca.workflow.degree_project.access.IUserRepository repo
+                    = co.unicauca.workflow.degree_project.access.Factory.getInstance().getRepository("default");
+            co.unicauca.workflow.degree_project.domain.entities.IPasswordHasher hasher
+                    = new co.unicauca.workflow.degree_project.domain.services.Argon2PasswordHasher();
+            co.unicauca.workflow.degree_project.domain.services.IRegistrationService regSvc
+                    = new co.unicauca.workflow.degree_project.domain.services.UserService(repo, hasher);
+
+            new GUISignUp(regSvc).setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BotonRegistrarse;
     private javax.swing.JLabel Escudo;
-    private javax.swing.JComboBox<String> cbxPrograma;
-    private javax.swing.JComboBox<String> cbxRol;
+    private javax.swing.JComboBox<Programa> cbxPrograma;
+    private javax.swing.JComboBox<Rol> cbxRol;
     private javax.swing.JPanel jBackGround;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblApellidos;
     private javax.swing.JLabel lblBotonRegistrarse;
+    private javax.swing.JLabel lblCelular;
     private javax.swing.JLabel lblCondiciones;
     private javax.swing.JLabel lblConrtaseña;
+    private javax.swing.JLabel lblErrorApellido;
+    private javax.swing.JLabel lblErrorCelular;
+    private javax.swing.JLabel lblErrorContraseña;
+    private javax.swing.JLabel lblErrorNombre;
+    private javax.swing.JLabel lblErrorUsuario;
     private javax.swing.JLabel lblNoCuenta;
     private javax.swing.JLabel lblNombres;
     private javax.swing.JLabel lblPrograma;
@@ -413,7 +557,9 @@ public class GUISignUp extends javax.swing.JFrame {
     private javax.swing.JSeparator sepUsuario;
     private javax.swing.JSeparator sepUsuario1;
     private javax.swing.JSeparator sepUsuario2;
+    private javax.swing.JSeparator sepUsuario3;
     private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtCelular;
     private javax.swing.JPasswordField txtConrtaseña;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtNombres;

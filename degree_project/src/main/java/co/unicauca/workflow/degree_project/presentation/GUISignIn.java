@@ -2,6 +2,9 @@ package co.unicauca.workflow.degree_project.presentation;
 
 import co.unicauca.workflow.degree_project.access.Factory;
 import co.unicauca.workflow.degree_project.access.IUserRepository;
+import co.unicauca.workflow.degree_project.domain.entities.IPasswordHasher;
+import co.unicauca.workflow.degree_project.domain.services.Argon2PasswordHasher;
+import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
 import co.unicauca.workflow.degree_project.domain.services.IUserService;
 import co.unicauca.workflow.degree_project.domain.services.UserService;
 import java.awt.Color;
@@ -110,7 +113,7 @@ public class GUISignIn extends javax.swing.JFrame {
         lblBotonIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBotonIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblBotonIngresarMouseClicked(evt);
+                //lblBotonIngresarMouseClicked(evt);
             }
         });
 
@@ -138,7 +141,7 @@ public class GUISignIn extends javax.swing.JFrame {
         lblRegistrarse.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblRegistrarseMouseClicked(evt);
+                //lblRegistrarseMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblRegistrarseMouseEntered(evt);
@@ -227,8 +230,11 @@ public class GUISignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_lblBotonIngresarMouseClicked
 
     private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
-        GUISignUp iniciar = new GUISignUp();
-        iniciar.setVisible(true);
+        IUserRepository repo   = Factory.getInstance().getRepository("default");
+        IPasswordHasher hasher = new Argon2PasswordHasher();
+        IRegistrationService regSvc  = new UserService(repo, hasher);
+        GUISignUp ventana = new GUISignUp(regSvc); // inyectamos el servicio
+        ventana.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblRegistrarseMouseClicked
 
