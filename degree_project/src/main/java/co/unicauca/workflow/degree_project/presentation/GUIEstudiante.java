@@ -18,6 +18,7 @@ public class GUIEstudiante extends javax.swing.JFrame {
     
     
     private void initContent(){
+        setLocationRelativeTo(null);
         ShowJPanel(new PrincipalEstudiantePanel());
     }
     
@@ -56,6 +57,7 @@ public class GUIEstudiante extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 500));
+        setResizable(false);
 
         bg.setBackground(new java.awt.Color(255, 255, 255));
         bg.setPreferredSize(new java.awt.Dimension(1020, 640));

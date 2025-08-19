@@ -108,40 +108,21 @@ public class UserService implements IRegistrationService, IUserService {
     }
     
     @Override
-    public void validacion(String usuario, char[] passwordIngresada){   
+    public int validacion(String usuario, char[] passwordIngresada){   
         //Toca pq despues de usar verify se me borra el array
         char[] copia = Arrays.copyOf(passwordIngresada, passwordIngresada.length);
 
         boolean flag = validarSesion(usuario, passwordIngresada);
         if(!flag){
-            JOptionPane.showMessageDialog(
-                null,
-                "No fue posible ingresar, usuario o contraseña incorrectos.",
-                "Credenciales invalidas",
-                JOptionPane.WARNING_MESSAGE
-            );
+            return 0;
         }else{              
             switch (getRol(usuario, copia)) {
                 case "Estudiante":
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Inicio de sesión como estudiante exitoso.",
-                        "Correcto",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
-                    break;
+                    return 1;
                 case "Docente":
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Inicio de sesión como docente exitoso.",
-                        "Correcto",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "El usuario no tiene un rol asociado", "Error", JOptionPane.ERROR_MESSAGE);
-                    break;
+                    return 2;
             }
         }
+        return 0;
     }
 }

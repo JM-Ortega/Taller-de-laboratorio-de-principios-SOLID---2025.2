@@ -113,7 +113,7 @@ public class GUISignIn extends javax.swing.JFrame {
         lblBotonIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblBotonIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                //lblBotonIngresarMouseClicked(evt);
+                lblBotonIngresarMouseClicked(evt);
             }
         });
 
@@ -141,7 +141,7 @@ public class GUISignIn extends javax.swing.JFrame {
         lblRegistrarse.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                //lblRegistrarseMouseClicked(evt);
+                lblRegistrarseMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblRegistrarseMouseEntered(evt);
@@ -209,6 +209,16 @@ public class GUISignIn extends javax.swing.JFrame {
         return texto.trim().isEmpty() || texto.equals(placeholder);
     }
     
+    private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
+        IUserRepository repo   = Factory.getInstance().getRepository("default");
+        IPasswordHasher hasher = new Argon2PasswordHasher();
+        IRegistrationService regSvc  = new UserService(repo, hasher);
+        
+        GUISignUp ventana = new GUISignUp(regSvc);
+        ventana.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_lblRegistrarseMouseClicked
+
     private void lblBotonIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonIngresarMouseClicked
         String usuario = txtCorreo.getText();
         char[] passwordIngresada = txtConrtaseña.getPassword();
@@ -225,18 +235,46 @@ public class GUISignIn extends javax.swing.JFrame {
                 JOptionPane.WARNING_MESSAGE
             );
         }else{
-            service.validacion(usuario, passwordIngresada);
-        }        
+            int answer = service.validacion(usuario, passwordIngresada);
+            switch(answer){
+                case 0:
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "No fue posible ingresar, usuario o contraseña incorrectos.",
+                        "Credenciales invalidas",
+                        JOptionPane.WARNING_MESSAGE
+                    );
+                    break;
+                case 1:
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Inicio de sesión como estudiante exitoso.",
+                        "Correcto",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                    
+                    GUIEstudiante ventanaEstudiante = new GUIEstudiante(); 
+                    ventanaEstudiante.setVisible(true);
+                    this.setVisible(false);
+                    break;
+                case 2:    
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Inicio de sesión como docente exitoso.",
+                        "Correcto",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                    
+                    GUIDocente ventanaDocente = new GUIDocente(); 
+                    ventanaDocente.setVisible(true);
+                    this.setVisible(false);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "El usuario no tiene un rol asociado", "Error", JOptionPane.ERROR_MESSAGE);
+                    break;
+            }
+        }
     }//GEN-LAST:event_lblBotonIngresarMouseClicked
-
-    private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
-        IUserRepository repo   = Factory.getInstance().getRepository("default");
-        IPasswordHasher hasher = new Argon2PasswordHasher();
-        IRegistrationService regSvc  = new UserService(repo, hasher);
-        GUISignUp ventana = new GUISignUp(regSvc); // inyectamos el servicio
-        ventana.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_lblRegistrarseMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
