@@ -5,9 +5,12 @@ import co.unicauca.workflow.degree_project.domain.entities.User;
 public interface IUserRepository {
     boolean save(User newUser);
     
-    String getRol(String email, String password);
+    String getRol(String email, char[] passwordIngresada);
     
     String getPassword(String email);
     
+    boolean validarIngrereso(String email, char[] passwordIngresada);
+
     boolean existsByEmail(String email);
+
 }

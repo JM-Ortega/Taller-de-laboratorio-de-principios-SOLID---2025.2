@@ -1,6 +1,5 @@
 package co.unicauca.workflow.degree_project.domain.entities;
 
-
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,7 +13,6 @@ public class User {
     private Rol rol;
     private String email;
     private String passwordHash;
-
 
     public User() {
         this.id = UUID.randomUUID().toString();
