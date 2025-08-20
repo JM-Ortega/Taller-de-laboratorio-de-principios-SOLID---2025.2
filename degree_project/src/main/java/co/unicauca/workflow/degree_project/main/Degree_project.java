@@ -1,19 +1,36 @@
 package co.unicauca.workflow.degree_project.main;
 
+import co.unicauca.workflow.degree_project.access.IUserRepository;
+import co.unicauca.workflow.degree_project.access.SqliteRepository;
+import co.unicauca.workflow.degree_project.domain.entities.IPasswordHasher;
+import co.unicauca.workflow.degree_project.domain.services.Argon2PasswordHasher;
+import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
+import co.unicauca.workflow.degree_project.domain.services.IUserService;
+import co.unicauca.workflow.degree_project.domain.services.UserService;
 import co.unicauca.workflow.degree_project.presentation.GUISignIn;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class Degree_project {
+
     public static void main(String[] args) {
+
+        IUserRepository repo = new SqliteRepository();
+        IPasswordHasher hasher = new Argon2PasswordHasher();
         
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                GUISignIn ventana = new GUISignIn();
-                ventana.setVisible(true);
-                ventana.setLocationRelativeTo(null); // Centra la ventana
-                ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la app al cerrar la ventana
-            }
-        });  
+        
+        UserService userService = new UserService(repo, hasher);
+        
+        
+        IUserService loginService = userService;
+        
+        IRegistrationService registrationService = userService;
+
+        SwingUtilities.invokeLater(() -> {
+            GUISignIn ventana = new GUISignIn(loginService, registrationService);
+            ventana.setVisible(true);
+            ventana.setLocationRelativeTo(null);
+            ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        });
     }
 }
