@@ -1,27 +1,26 @@
 package co.unicauca.workflow.degree_project.presentation;
 
 import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
-import co.unicauca.workflow.degree_project.domain.services.IUserService;
 import co.unicauca.workflow.degree_project.presentation.modules.EvaluarAnteP;
 import co.unicauca.workflow.degree_project.presentation.modules.EvaluarMon;
 import co.unicauca.workflow.degree_project.presentation.modules.Principal;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import co.unicauca.workflow.degree_project.domain.services.ISignInService;
 
 public class GUIDocente extends javax.swing.JFrame {
-     private final IRegistrationService registration;
-     private final IUserService authService;
+    private final IRegistrationService registration;
+    private final ISignInService authService;
 
     /**
      * Creates new form GUIDocente
      */
-    public GUIDocente(IUserService authService, IRegistrationService registration) {
+    public GUIDocente(ISignInService authService, IRegistrationService registration) {
         this.authService = authService;
         this.registration = registration;
         initComponents();
         initContent();
     }
-    
     
     private void initContent(){
         setLocationRelativeTo(null);

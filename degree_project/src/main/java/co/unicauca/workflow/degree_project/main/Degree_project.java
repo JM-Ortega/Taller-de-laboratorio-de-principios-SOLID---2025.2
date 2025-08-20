@@ -5,11 +5,11 @@ import co.unicauca.workflow.degree_project.access.SqliteRepository;
 import co.unicauca.workflow.degree_project.domain.entities.IPasswordHasher;
 import co.unicauca.workflow.degree_project.domain.services.Argon2PasswordHasher;
 import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
-import co.unicauca.workflow.degree_project.domain.services.IUserService;
 import co.unicauca.workflow.degree_project.domain.services.UserService;
 import co.unicauca.workflow.degree_project.presentation.GUISignIn;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import co.unicauca.workflow.degree_project.domain.services.ISignInService;
 
 public class Degree_project {
 
@@ -22,7 +22,7 @@ public class Degree_project {
         UserService userService = new UserService(repo, hasher);
         
         
-        IUserService loginService = userService;
+        ISignInService loginService = userService;
         
         IRegistrationService registrationService = userService;
 

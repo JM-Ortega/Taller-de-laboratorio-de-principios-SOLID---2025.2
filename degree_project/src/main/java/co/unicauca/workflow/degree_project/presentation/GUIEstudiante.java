@@ -1,28 +1,27 @@
 package co.unicauca.workflow.degree_project.presentation;
 
 import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
-import co.unicauca.workflow.degree_project.domain.services.IUserService;
 import co.unicauca.workflow.degree_project.presentation.modules.NuevoTGPanel;
 import co.unicauca.workflow.degree_project.presentation.modules.MiTrabajoPanel;
 import co.unicauca.workflow.degree_project.presentation.modules.PrincipalEstudiantePanel;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import co.unicauca.workflow.degree_project.domain.services.ISignInService;
 
 public class GUIEstudiante extends javax.swing.JFrame {
-     private final IRegistrationService registration;
-     private final IUserService authService;
+    private final IRegistrationService registration;
+    private final ISignInService authService;
 
     /**
      * Creates new form GUIEstudiante
      */
-    public GUIEstudiante(IUserService authService, IRegistrationService registration) {
+    public GUIEstudiante(ISignInService authService, IRegistrationService registration) {
         this.authService = authService;
         this.registration = registration;
         initComponents();
         initContent();
     }
-    
-    
+      
     private void initContent(){
         setLocationRelativeTo(null);
         ShowJPanel(new PrincipalEstudiantePanel());

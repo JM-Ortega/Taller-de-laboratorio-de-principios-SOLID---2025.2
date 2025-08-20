@@ -8,9 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Arrays;
-import javax.swing.JOptionPane;
 
-public class UserService implements IRegistrationService, IUserService {
+public class UserService implements IRegistrationService, ISignInService {
 
     private final IUserRepository repo;
     private final IPasswordHasher hasher;
@@ -20,11 +19,6 @@ public class UserService implements IRegistrationService, IUserService {
         this.repo = repo;
         this.hasher = hasher;
     }
-    /*
-    public UserService(IUserRepository repo) {
-        this.repo = repo;
-        this.hasher = null;
-    }*/
 
     @Override
     public RegistrationResult register(RegisterUserDTO dto) {
@@ -94,28 +88,28 @@ public class UserService implements IRegistrationService, IUserService {
 
         return 99;
     }
-    
+
     @Override
-    public boolean validarSesion(String email, char[] passwordIngresada){
+    public boolean validarSesion(String email, char[] passwordIngresada) {
         boolean flag = repo.validarIngrereso(email, passwordIngresada);
         return flag;
-    } 
-    
+    }
+
     @Override
-    public String getRol(String email, char[] passwordIngresada){
+    public String getRol(String email, char[] passwordIngresada) {
         String rol = repo.getRol(email, passwordIngresada);
         return rol;
     }
-    
+
     @Override
-    public int validacion(String usuario, char[] passwordIngresada){   
+    public int validacion(String usuario, char[] passwordIngresada) {
         //Toca pq despues de usar verify se me borra el array
         char[] copia = Arrays.copyOf(passwordIngresada, passwordIngresada.length);
 
         boolean flag = validarSesion(usuario, passwordIngresada);
-        if(!flag){
+        if (!flag) {
             return 0;
-        }else{              
+        } else {
             switch (getRol(usuario, copia)) {
                 case "Estudiante":
                     return 1;

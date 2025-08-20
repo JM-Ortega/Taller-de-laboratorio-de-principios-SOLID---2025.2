@@ -1,27 +1,22 @@
 package co.unicauca.workflow.degree_project.presentation;
 
-import co.unicauca.workflow.degree_project.access.Factory;
-import co.unicauca.workflow.degree_project.access.IUserRepository;
-import co.unicauca.workflow.degree_project.domain.entities.IPasswordHasher;
-import co.unicauca.workflow.degree_project.domain.services.Argon2PasswordHasher;
 import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
-import co.unicauca.workflow.degree_project.domain.services.IUserService;
-import co.unicauca.workflow.degree_project.domain.services.UserService;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import co.unicauca.workflow.degree_project.domain.services.ISignInService;
 
 public class GUISignIn extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUISignIn.class.getName());
 
-    private final IUserService authService;
+    private final ISignInService authService;
     private final IRegistrationService registration;
 
-    public GUISignIn(IUserService authService, IRegistrationService registration) {
+    public GUISignIn(ISignInService authService, IRegistrationService registration) {
         this.authService = authService;
         this.registration = registration;
 
@@ -73,9 +68,12 @@ public class GUISignIn extends javax.swing.JFrame {
         txtCorreo.setForeground(new java.awt.Color(102, 102, 102));
         txtCorreo.setText("Ingrese su correo institucional");
         txtCorreo.setBorder(null);
-        txtCorreo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                txtCorreoMousePressed(evt);
+        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCorreoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCorreoFocusLost(evt);
             }
         });
         jBackGround.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 220, 290, 20));
@@ -95,6 +93,14 @@ public class GUISignIn extends javax.swing.JFrame {
         txtConrtaseña.setText("**********");
         txtConrtaseña.setBorder(null);
         txtConrtaseña.setPreferredSize(new java.awt.Dimension(270, 20));
+        txtConrtaseña.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtConrtaseñaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtConrtaseñaFocusLost(evt);
+            }
+        });
         txtConrtaseña.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 txtConrtaseñaMousePressed(evt);
@@ -179,17 +185,6 @@ public class GUISignIn extends javax.swing.JFrame {
         lblRegistrarse.setForeground(Color.BLACK);
         lblRegistrarse.setFont(new Font("Roboto", Font.PLAIN, 12));
     }//GEN-LAST:event_lblRegistrarseMouseExited
-
-    private void txtCorreoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCorreoMousePressed
-        if (txtCorreo.getText().equals("Ingrese su correo institucional")) {
-            txtCorreo.setText("");
-            txtCorreo.setForeground(Color.black);
-        }
-        if (String.valueOf(txtConrtaseña.getPassword()).isEmpty()) {
-            txtConrtaseña.setText("**********");
-            txtConrtaseña.setForeground(Color.gray);
-        }
-    }//GEN-LAST:event_txtCorreoMousePressed
 
     private void txtConrtaseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtConrtaseñaMousePressed
         if (String.valueOf(txtConrtaseña.getPassword()).equals("**********")) {
@@ -282,6 +277,34 @@ public class GUISignIn extends javax.swing.JFrame {
             java.util.Arrays.fill(passwordIngresada, '\0');
         }
     }//GEN-LAST:event_lblBotonIngresarMouseClicked
+
+    private void txtCorreoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusGained
+        if (txtCorreo.getText().equals("Ingrese su correo institucional")) {
+            txtCorreo.setText("");
+            txtCorreo.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtCorreoFocusGained
+
+    private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
+        if (txtCorreo.getText().isEmpty()) {
+            txtCorreo.setText("Ingrese su correo institucional");
+            txtCorreo.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtCorreoFocusLost
+
+    private void txtConrtaseñaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtConrtaseñaFocusGained
+        if (String.valueOf(txtConrtaseña.getPassword()).equals("**********")) {
+            txtConrtaseña.setText("");
+            txtConrtaseña.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_txtConrtaseñaFocusGained
+
+    private void txtConrtaseñaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtConrtaseñaFocusLost
+        if (String.valueOf(txtConrtaseña.getPassword()).isEmpty()) {
+            txtConrtaseña.setText("**********");
+            txtConrtaseña.setForeground(Color.gray);
+        }
+    }//GEN-LAST:event_txtConrtaseñaFocusLost
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

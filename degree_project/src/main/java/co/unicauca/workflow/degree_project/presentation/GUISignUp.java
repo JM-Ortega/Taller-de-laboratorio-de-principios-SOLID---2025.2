@@ -7,13 +7,11 @@ package co.unicauca.workflow.degree_project.presentation;
 import co.unicauca.workflow.degree_project.domain.entities.Programa;
 import co.unicauca.workflow.degree_project.domain.entities.Rol;
 import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
-import co.unicauca.workflow.degree_project.domain.services.IUserService;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import co.unicauca.workflow.degree_project.domain.services.ISignInService;
 
 /**
  *
@@ -24,12 +22,12 @@ public class GUISignUp extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUISignUp.class.getName());
 
     private final IRegistrationService registration;
-     private final IUserService authService;
+    private final ISignInService authService;
 
     /**
      * Creates new form GUIPrueba
      */
-    public GUISignUp(IRegistrationService registration, IUserService authService) {
+    public GUISignUp(IRegistrationService registration, ISignInService authService) {
         this.registration = registration;
         this.authService = authService;
         initComponents();
@@ -334,18 +332,6 @@ public class GUISignUp extends javax.swing.JFrame {
         lblRegistrarse.setFont(new Font("Roboto", Font.PLAIN, 12));
     }//GEN-LAST:event_lblRegistrarseMouseExited
 
-    // Método para validar JTextField
-    private boolean esCampoInvalido(JTextField campo, String placeholder) {
-        return campo.getText().trim().isEmpty() || campo.getText().equals(placeholder);
-    }
-
-    // Método para validar JPasswordField
-    private boolean esCampoInvalido(JPasswordField campo, String placeholder) {
-        String texto = String.valueOf(campo.getPassword());
-        return texto.trim().isEmpty() || texto.equals(placeholder);
-    }
-
-
     private void lblBotonRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonRegistrarseMouseClicked
         clearFieldErrors();
 
@@ -421,8 +407,6 @@ public class GUISignUp extends javax.swing.JFrame {
             txtCelular.setText("");
             txtCelular.setForeground(Color.black);
         }
-
-
     }//GEN-LAST:event_txtCelularFocusGained
 
     private void txtCelularFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCelularFocusLost
