@@ -7,6 +7,7 @@ package co.unicauca.workflow.degree_project.presentation;
 import co.unicauca.workflow.degree_project.domain.entities.Programa;
 import co.unicauca.workflow.degree_project.domain.entities.Rol;
 import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
+import co.unicauca.workflow.degree_project.domain.services.IUserService;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JOptionPane;
@@ -23,12 +24,14 @@ public class GUISignUp extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUISignUp.class.getName());
 
     private final IRegistrationService registration;
+     private final IUserService authService;
 
     /**
      * Creates new form GUIPrueba
      */
-    public GUISignUp(IRegistrationService registration) {
+    public GUISignUp(IRegistrationService registration, IUserService authService) {
         this.registration = registration;
+        this.authService = authService;
         initComponents();
         this.setLocationRelativeTo(null);
         SwingUtilities.invokeLater(() -> {
@@ -401,14 +404,14 @@ public class GUISignUp extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "¡Registro exitoso!", "Registro" , JOptionPane.INFORMATION_MESSAGE);
        //TODO, redireccion a login
        
-        GUISignIn iniciar = new GUISignIn();
+        GUISignIn iniciar = new GUISignIn(authService, registration);
         iniciar.setVisible(true);
         this.dispose();
     
     }//GEN-LAST:event_lblBotonRegistrarseMouseClicked
 
     private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
-        GUISignIn iniciar = new GUISignIn();
+        GUISignIn iniciar = new GUISignIn(this.authService, this.registration);
         iniciar.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblRegistrarseMouseClicked
@@ -526,7 +529,7 @@ public class GUISignUp extends javax.swing.JFrame {
             co.unicauca.workflow.degree_project.domain.services.IRegistrationService regSvc
                     = new co.unicauca.workflow.degree_project.domain.services.UserService(repo, hasher);
 
-            new GUISignUp(regSvc).setVisible(true);
+           // new GUISignUp(regSvc).setVisible(true);
         });
     }
 

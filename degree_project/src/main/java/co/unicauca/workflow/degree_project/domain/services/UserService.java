@@ -20,11 +20,11 @@ public class UserService implements IRegistrationService, IUserService {
         this.repo = repo;
         this.hasher = hasher;
     }
-    
+    /*
     public UserService(IUserRepository repo) {
         this.repo = repo;
         this.hasher = null;
-    }
+    }*/
 
     @Override
     public RegistrationResult register(RegisterUserDTO dto) {

@@ -15,15 +15,19 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 public class GUISignIn extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUISignIn.class.getName());
 
-    public GUISignIn() {
+    private final IUserService authService;
+    private final IRegistrationService registration;
+
+    public GUISignIn(IUserService authService, IRegistrationService registration) {
+        this.authService = authService;
+        this.registration = registration;
+
         initComponents();
         this.setLocationRelativeTo(null);
-        SwingUtilities.invokeLater(() -> {
-            Escudo.requestFocusInWindow();
-        });
+        SwingUtilities.invokeLater(() -> Escudo.requestFocusInWindow());
     }
 
     @SuppressWarnings("unchecked")
@@ -177,22 +181,22 @@ public class GUISignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_lblRegistrarseMouseExited
 
     private void txtCorreoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCorreoMousePressed
-        if(txtCorreo.getText().equals("Ingrese su correo institucional")){
+        if (txtCorreo.getText().equals("Ingrese su correo institucional")) {
             txtCorreo.setText("");
             txtCorreo.setForeground(Color.black);
         }
-        if(String.valueOf(txtConrtaseña.getPassword()).isEmpty()){
+        if (String.valueOf(txtConrtaseña.getPassword()).isEmpty()) {
             txtConrtaseña.setText("**********");
             txtConrtaseña.setForeground(Color.gray);
         }
     }//GEN-LAST:event_txtCorreoMousePressed
 
     private void txtConrtaseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtConrtaseñaMousePressed
-        if(String.valueOf(txtConrtaseña.getPassword()).equals("**********")){
+        if (String.valueOf(txtConrtaseña.getPassword()).equals("**********")) {
             txtConrtaseña.setText("");
             txtConrtaseña.setForeground(Color.black);
         }
-        if(txtCorreo.getText().isEmpty()){
+        if (txtCorreo.getText().isEmpty()) {
             txtCorreo.setText("Ingrese su correo institucional");
             txtCorreo.setForeground(Color.gray);
         }
@@ -208,71 +212,74 @@ public class GUISignIn extends javax.swing.JFrame {
         String texto = String.valueOf(campo.getPassword());
         return texto.trim().isEmpty() || texto.equals(placeholder);
     }
-    
+
     private void lblRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegistrarseMouseClicked
-        IUserRepository repo   = Factory.getInstance().getRepository("default");
-        IPasswordHasher hasher = new Argon2PasswordHasher();
-        IRegistrationService regSvc  = new UserService(repo, hasher);
         
-        GUISignUp ventana = new GUISignUp(regSvc);
+        GUISignUp ventana = new GUISignUp(registration, authService);
         ventana.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_lblRegistrarseMouseClicked
 
     private void lblBotonIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBotonIngresarMouseClicked
-        String usuario = txtCorreo.getText();
+
+        String usuario = txtCorreo.getText().trim().toLowerCase();
         char[] passwordIngresada = txtConrtaseña.getPassword();
-        
-        IUserRepository repository = Factory.getInstance().getRepository("default");
-        IUserService service = new UserService(repository);
-        
-        if (esCampoInvalido(txtCorreo, "Ingrese su correo institucional") ||
-            esCampoInvalido(txtConrtaseña, "**********")){
-            JOptionPane.showMessageDialog(
-                null,
-                "Por favor, rellene todos los campos.",
-                "Campos incompletos",
-                JOptionPane.WARNING_MESSAGE
-            );
-        }else{
-            int answer = service.validacion(usuario, passwordIngresada);
-            switch(answer){
-                case 0:
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "No fue posible ingresar, usuario o contraseña incorrectos.",
-                        "Credenciales invalidas",
+
+        try {
+            if (esCampoInvalido(txtCorreo, "Ingrese su correo institucional")
+                    || esCampoInvalido(txtConrtaseña, "**********")) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Por favor, rellene todos los campos.",
+                        "Campos incompletos",
                         JOptionPane.WARNING_MESSAGE
-                    );
-                    break;
-                case 1:
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Inicio de sesión como estudiante exitoso.",
-                        "Correcto",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
-                    
-                    GUIEstudiante ventanaEstudiante = new GUIEstudiante(); 
-                    ventanaEstudiante.setVisible(true);
-                    this.setVisible(false);
-                    break;
-                case 2:    
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Inicio de sesión como docente exitoso.",
-                        "Correcto",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
-                    
-                    GUIDocente ventanaDocente = new GUIDocente(); 
-                    ventanaDocente.setVisible(true);
-                    this.setVisible(false);
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "El usuario no tiene un rol asociado", "Error", JOptionPane.ERROR_MESSAGE);
-                    break;
+                );
+                return;
             }
+
+            int answer = authService.validacion(usuario, passwordIngresada);
+
+            switch (answer) {
+                case 0 ->
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "No fue posible ingresar, usuario o contraseña incorrectos.",
+                            "Credenciales inválidas",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+
+                case 1 -> {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Inicio de sesión como estudiante exitoso.",
+                            "Correcto",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                    new GUIEstudiante(authService, registration).setVisible(true);
+                    this.dispose();
+                }
+
+                case 2 -> {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Inicio de sesión como docente exitoso.",
+                            "Correcto",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                    new GUIDocente(authService, registration).setVisible(true);
+                    this.dispose();
+                }
+
+                default ->
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "El usuario no tiene un rol asociado",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+            }
+        } finally {
+            java.util.Arrays.fill(passwordIngresada, '\0');
         }
     }//GEN-LAST:event_lblBotonIngresarMouseClicked
 
@@ -295,7 +302,7 @@ public class GUISignIn extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUISignIn().setVisible(true));
+        // java.awt.EventQueue.invokeLater(() -> new GUISignIn().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

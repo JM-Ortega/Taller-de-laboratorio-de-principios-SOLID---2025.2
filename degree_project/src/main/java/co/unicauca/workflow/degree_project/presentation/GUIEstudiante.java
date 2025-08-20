@@ -1,5 +1,7 @@
 package co.unicauca.workflow.degree_project.presentation;
 
+import co.unicauca.workflow.degree_project.domain.services.IRegistrationService;
+import co.unicauca.workflow.degree_project.domain.services.IUserService;
 import co.unicauca.workflow.degree_project.presentation.modules.NuevoTGPanel;
 import co.unicauca.workflow.degree_project.presentation.modules.MiTrabajoPanel;
 import co.unicauca.workflow.degree_project.presentation.modules.PrincipalEstudiantePanel;
@@ -7,11 +9,15 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
 public class GUIEstudiante extends javax.swing.JFrame {
+     private final IRegistrationService registration;
+     private final IUserService authService;
 
     /**
      * Creates new form GUIEstudiante
      */
-    public GUIEstudiante() {
+    public GUIEstudiante(IUserService authService, IRegistrationService registration) {
+        this.authService = authService;
+        this.registration = registration;
         initComponents();
         initContent();
     }
@@ -292,7 +298,7 @@ public class GUIEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnIniciarNuevoTrabajoDeGradoActionPerformed
 
     private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
-        GUISignIn iniciar = new GUISignIn();
+        GUISignIn iniciar = new GUISignIn(authService, registration);
         iniciar.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BtnSalirActionPerformed
@@ -328,7 +334,7 @@ public class GUIEstudiante extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIEstudiante().setVisible(true);
+                //new GUIEstudiante().setVisible(true);
             }
         });
     }
