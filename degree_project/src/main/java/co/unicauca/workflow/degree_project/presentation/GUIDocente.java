@@ -25,6 +25,7 @@ public class GUIDocente extends javax.swing.JFrame {
     private void initContent(){
         setLocationRelativeTo(null);
         ShowJPanel(new Principal());
+        BtnPrincipal.setBackground(new java.awt.Color(183, 207, 229));
     }
     
     private void ShowJPanel(JPanel p){
@@ -98,6 +99,8 @@ public class GUIDocente extends javax.swing.JFrame {
         BtnEvaluarAnteproyectos.setBorder(null);
         BtnEvaluarAnteproyectos.setBorderPainted(false);
         BtnEvaluarAnteproyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnEvaluarAnteproyectos.setDefaultCapable(false);
+        BtnEvaluarAnteproyectos.setFocusPainted(false);
         BtnEvaluarAnteproyectos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BtnEvaluarAnteproyectos.setVerifyInputWhenFocusTarget(false);
         BtnEvaluarAnteproyectos.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +117,8 @@ public class GUIDocente extends javax.swing.JFrame {
         BtnEvaluarMonografias.setBorder(null);
         BtnEvaluarMonografias.setBorderPainted(false);
         BtnEvaluarMonografias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnEvaluarMonografias.setDefaultCapable(false);
+        BtnEvaluarMonografias.setFocusPainted(false);
         BtnEvaluarMonografias.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BtnEvaluarMonografias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +134,8 @@ public class GUIDocente extends javax.swing.JFrame {
         BtnPrincipal.setBorder(null);
         BtnPrincipal.setBorderPainted(false);
         BtnPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnPrincipal.setDefaultCapable(false);
+        BtnPrincipal.setFocusPainted(false);
         BtnPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BtnPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +151,8 @@ public class GUIDocente extends javax.swing.JFrame {
         BtnSalir.setBorder(null);
         BtnSalir.setBorderPainted(false);
         BtnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnSalir.setDefaultCapable(false);
+        BtnSalir.setFocusPainted(false);
         BtnSalir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BtnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,20 +295,32 @@ public class GUIDocente extends javax.swing.JFrame {
     
     private void BtnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrincipalActionPerformed
         ShowJPanel(new Principal());
+        BtnPrincipal.setBackground(new java.awt.Color(183, 207, 229));
+        BtnEvaluarAnteproyectos.setBackground(new java.awt.Color(32,44,103));
+        BtnEvaluarMonografias.setBackground(new java.awt.Color(32,44,103));
     }//GEN-LAST:event_BtnPrincipalActionPerformed
 
     private void BtnEvaluarAnteproyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEvaluarAnteproyectosActionPerformed
         ShowJPanel(new EvaluarAnteP());
+        BtnEvaluarAnteproyectos.setBackground(new java.awt.Color(183, 207, 229));
+        BtnPrincipal.setBackground(new java.awt.Color(32,44,103));
+        BtnEvaluarMonografias.setBackground(new java.awt.Color(32,44,103));
     }//GEN-LAST:event_BtnEvaluarAnteproyectosActionPerformed
 
     private void BtnEvaluarMonografiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEvaluarMonografiasActionPerformed
         ShowJPanel(new EvaluarMon());
+        BtnEvaluarMonografias.setBackground(new java.awt.Color(183, 207, 229));
+        BtnPrincipal.setBackground(new java.awt.Color(32,44,103));
+        BtnEvaluarAnteproyectos.setBackground(new java.awt.Color(32,44,103));
     }//GEN-LAST:event_BtnEvaluarMonografiasActionPerformed
 
     private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
         GUISignIn iniciar = new GUISignIn(authService, registration);
         iniciar.setVisible(true);
         this.setVisible(false);
+        BtnPrincipal.setBackground(new java.awt.Color(183, 207, 229));
+        BtnEvaluarAnteproyectos.setBackground(new java.awt.Color(32,44,103));
+        BtnEvaluarMonografias.setBackground(new java.awt.Color(32,44,103));
     }//GEN-LAST:event_BtnSalirActionPerformed
 
     /**

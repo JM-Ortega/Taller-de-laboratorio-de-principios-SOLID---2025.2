@@ -25,6 +25,7 @@ public class GUIEstudiante extends javax.swing.JFrame {
     private void initContent(){
         setLocationRelativeTo(null);
         ShowJPanel(new PrincipalEstudiantePanel());
+        BtnPrincipal.setBackground(new java.awt.Color(183, 207, 229));
     }
     
     private void ShowJPanel(JPanel p){
@@ -97,6 +98,8 @@ public class GUIEstudiante extends javax.swing.JFrame {
         BtnMiTrabajoDeGrado.setBorder(null);
         BtnMiTrabajoDeGrado.setBorderPainted(false);
         BtnMiTrabajoDeGrado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnMiTrabajoDeGrado.setDefaultCapable(false);
+        BtnMiTrabajoDeGrado.setFocusPainted(false);
         BtnMiTrabajoDeGrado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BtnMiTrabajoDeGrado.setVerifyInputWhenFocusTarget(false);
         BtnMiTrabajoDeGrado.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +117,8 @@ public class GUIEstudiante extends javax.swing.JFrame {
         BtnIniciarNuevoTrabajoDeGrado.setBorder(null);
         BtnIniciarNuevoTrabajoDeGrado.setBorderPainted(false);
         BtnIniciarNuevoTrabajoDeGrado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnIniciarNuevoTrabajoDeGrado.setDefaultCapable(false);
+        BtnIniciarNuevoTrabajoDeGrado.setFocusPainted(false);
         BtnIniciarNuevoTrabajoDeGrado.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BtnIniciarNuevoTrabajoDeGrado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +134,8 @@ public class GUIEstudiante extends javax.swing.JFrame {
         BtnPrincipal.setBorder(null);
         BtnPrincipal.setBorderPainted(false);
         BtnPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnPrincipal.setDefaultCapable(false);
+        BtnPrincipal.setFocusPainted(false);
         BtnPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BtnPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,6 +151,8 @@ public class GUIEstudiante extends javax.swing.JFrame {
         BtnSalir.setBorder(null);
         BtnSalir.setBorderPainted(false);
         BtnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnSalir.setDefaultCapable(false);
+        BtnSalir.setFocusPainted(false);
         BtnSalir.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BtnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -286,20 +295,32 @@ public class GUIEstudiante extends javax.swing.JFrame {
     
     private void BtnPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrincipalActionPerformed
         ShowJPanel(new PrincipalEstudiantePanel());
+        BtnPrincipal.setBackground(new java.awt.Color(183, 207, 229));
+        BtnMiTrabajoDeGrado.setBackground(new java.awt.Color(32,44,103));
+        BtnIniciarNuevoTrabajoDeGrado.setBackground(new java.awt.Color(32,44,103));
     }//GEN-LAST:event_BtnPrincipalActionPerformed
 
     private void BtnMiTrabajoDeGradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMiTrabajoDeGradoActionPerformed
         ShowJPanel(new MiTrabajoPanel());
+        BtnMiTrabajoDeGrado.setBackground(new java.awt.Color(183, 207, 229));
+        BtnPrincipal.setBackground(new java.awt.Color(32,44,103));
+        BtnIniciarNuevoTrabajoDeGrado.setBackground(new java.awt.Color(32,44,103));
     }//GEN-LAST:event_BtnMiTrabajoDeGradoActionPerformed
 
     private void BtnIniciarNuevoTrabajoDeGradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarNuevoTrabajoDeGradoActionPerformed
         ShowJPanel(new NuevoTGPanel());
+        BtnMiTrabajoDeGrado.setBackground(new java.awt.Color(32,44,103));
+        BtnPrincipal.setBackground(new java.awt.Color(32,44,103));
+        BtnIniciarNuevoTrabajoDeGrado.setBackground(new java.awt.Color(183, 207, 229));
     }//GEN-LAST:event_BtnIniciarNuevoTrabajoDeGradoActionPerformed
 
     private void BtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSalirActionPerformed
         GUISignIn iniciar = new GUISignIn(authService, registration);
         iniciar.setVisible(true);
         this.setVisible(false);
+        BtnIniciarNuevoTrabajoDeGrado.setBackground(new java.awt.Color(32,44,103));
+        BtnMiTrabajoDeGrado.setBackground(new java.awt.Color(32,44,103));
+        BtnPrincipal.setBackground(new java.awt.Color(32,44,103));
     }//GEN-LAST:event_BtnSalirActionPerformed
 
     /**
